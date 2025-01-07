@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <base target="_top" />
+     <h2>เว็บแอประบบค้นหาข้อมูล</h2>
+     <style>
+input{
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+table {
+  font-family: times;
+  border-collapse: collapse;
+  width: 50%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+  </head>
+  <body align="center">
+    <input type="text"id="id" placeholder="พิมพ์ไอดี"/>
+    <br>
+    <input type="submit" value="ค้นหา" onclick="info()"/>
+    <hr><center>
+    <div id="result"></div>
+    </center>
+    <script>
+      function  info () {
+        let obj = document.querySelector('#id').value;
+        let updateLocation = document.querySelector('#result');
+        updateLocation.innerHTML = "กำลังค้นหา...";
+
+        function onFailure(error){
+          let warning = "<span style='color:red'>"+error+"</span>";
+          updateLocation.innerHTML = warning;
+        };
+        
+        function onSuccess(response){
+          let result ="<span style='color:blue'>"+response+"</span>";
+          updateLocation.innerHTML = result;
+        };
+        google.script.run.withFailureHandler(onFailure)
+                         .withSuccessHandler(onSuccess)
+                         .submitData(obj);
+      };
+    </script>
+  </body>
+</html>
